@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.alpha = Math.random() * 0.4 + 0.05;
       this.vx = (Math.random() - 0.5) * 0.2;
       this.vy = (Math.random() - 0.5) * 0.2;
-      this.color = Math.random() > 0.7 ? '#c8f542' : Math.random() > 0.5 ? '#7c6df5' : '#ffffff';
+      this.color = Math.random() > 0.7 ? '#c9824a' : Math.random() > 0.5 ? '#8a9a5b' : '#f3eadc';
     }
     update() {
       this.x += this.vx;
@@ -48,9 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Gradient blobs
   const blobs = [
-    { x: 0.15, y: 0.15, r: 350, color: 'rgba(124,109,245,0.06)' },
-    { x: 0.85, y: 0.8,  r: 400, color: 'rgba(200,245,66,0.04)' },
-    { x: 0.5,  y: 0.5,  r: 300, color: 'rgba(245,185,66,0.03)' },
+    { x: 0.15, y: 0.15, r: 350, color: 'rgba(138,154,91,0.07)' },
+    { x: 0.85, y: 0.8,  r: 400, color: 'rgba(201,130,74,0.06)' },
+    { x: 0.5,  y: 0.5,  r: 300, color: 'rgba(216,184,138,0.05)' },
   ];
 
   function animateCanvas() {
