@@ -1,2352 +1,454 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Nadiyah | Web Developer & UI/UX Designer</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet">
-
-  <style>
-    :root {
-      --bg: #17130f;
-      --bg-soft: #241c16;
-      --card: rgba(245, 232, 210, 0.07);
-      --card-hover: rgba(166, 124, 82, 0.13);
-      --text: #f3eadc;
-      --muted: #b8aa98;
-      --line: rgba(231, 213, 188, 0.16);
-      --primary: #a67c52;
-      --primary-soft: #d8b88a;
-      --shadow: 0 28px 90px rgba(28, 19, 12, 0.36);
-      --radius: 28px;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: "Inter", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 10% 10%, rgba(166, 124, 82, 0.16), transparent 30%),
-        radial-gradient(circle at 80% 20%, rgba(138, 154, 91, 0.10), transparent 28%),
-        radial-gradient(circle at 50% 90%, rgba(201, 130, 74, 0.12), transparent 32%),
-        var(--bg);
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px);
-      background-size: 80px 80px;
-      mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
-      pointer-events: none;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    .mono {
-      font-family: "DM Mono", monospace;
-      letter-spacing: .08em;
-    }
-
-    .container {
-      width: min(1180px, calc(100% - 44px));
-      margin: 0 auto;
-    }
-
-    header {
-      position: fixed;
-      inset: 0 0 auto 0;
-      z-index: 99;
-      background: rgba(23, 19, 15, .78);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .nav-inner {
-      width: min(1280px, calc(100% - 44px));
-      height: 76px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      font-family: "Syne", sans-serif;
-      font-weight: 800;
-      font-size: 1.35rem;
-      letter-spacing: -.04em;
-      color: var(--primary-soft);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 34px;
-      color: var(--muted);
-      font-size: .87rem;
-    }
-
-    .nav-links a {
-      transition: .25s ease;
-      white-space: nowrap;
-    }
-
-    .nav-links a:hover {
-      color: var(--primary-soft);
-    }
-
-    .burger {
-      display: none;
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: transparent;
-      color: var(--text);
-      cursor: pointer;
-    }
-
-    .burger span {
-      display: block;
-      width: 18px;
-      height: 2px;
-      background: currentColor;
-      margin: 4px auto;
-    }
-
-    .mobile-menu {
-      position: fixed;
-      z-index: 98;
-      top: 86px;
-      left: 18px;
-      right: 18px;
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: rgba(36, 28, 22, .96);
-      backdrop-filter: blur(18px);
-      opacity: 0;
-      transform: translateY(-10px);
-      pointer-events: none;
-      transition: .25s ease;
-    }
-
-    .mobile-menu.active {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-
-    .mobile-menu a {
-      display: block;
-      padding: 15px;
-      color: var(--muted);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .mobile-menu a:last-child {
-      border-bottom: 0;
-    }
-
-    .hero {
-      min-height: 100vh;
-      width: min(1280px, calc(100% - 44px));
-      margin: 0 auto;
-      padding: 128px 0 72px;
-      display: grid;
-      grid-template-columns: 1.02fr .98fr;
-      gap: 5rem;
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      gap: 12px;
-      align-items: center;
-      color: var(--muted);
-      margin-bottom: 22px;
-      font-size: .92rem;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 99px;
-      background: var(--primary);
-      box-shadow: 0 0 22px rgba(166, 124, 82, .65);
-    }
-
-    .hero-title {
-      font-family: "Syne", sans-serif;
-      font-size: clamp(2.6rem, 4.9vw, 4.95rem);
-      line-height: 1.03;
-      letter-spacing: -.065em;
-      max-width: 850px;
-    }
-
-    .hero-title span {
-      color: var(--primary-soft);
-      text-shadow: 0 0 35px rgba(166, 124, 82, .25);
-    }
-
-    .hero-desc {
-      margin-top: 26px;
-      max-width: 640px;
-      color: var(--muted);
-      font-size: 1.08rem;
-      line-height: 1.75;
-    }
-
-    .hero-actions {
-      margin-top: 38px;
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      min-height: 56px;
-      padding: 0 26px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      font-weight: 800;
-      transition: .3s ease;
-    }
-
-    .btn svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    .btn:hover {
-      transform: translateY(-4px);
-    }
-
-    .btn:disabled {
-      opacity: .7;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .btn-primary {
-      color: #17130f;
-      background: linear-gradient(135deg, var(--primary), var(--primary-soft));
-      border-color: transparent;
-      box-shadow: 0 18px 45px rgba(166, 124, 82, .22);
-    }
-
-    .btn-ghost:hover {
-      color: var(--primary-soft);
-      background: rgba(166, 124, 82, .08);
-      border-color: rgba(166, 124, 82, .45);
-    }
-
-    .hero-visual {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 28px;
-    }
-
-    .avatar-wrap {
-      width: min(410px, 80vw);
-      aspect-ratio: 1;
-      position: relative;
-      display: grid;
-      place-items: center;
-    }
-
-    .avatar-ring {
-      position: absolute;
-      inset: 0;
-      border: 1px solid rgba(166, 124, 82, .16);
-      border-radius: 999px;
-      animation: spin 18s linear infinite;
-    }
-
-    .ring-2 {
-      inset: 26px;
-      border-style: dashed;
-      animation-duration: 28s;
-      animation-direction: reverse;
-    }
-
-    .ring-3 {
-      inset: 52px;
-      border-color: rgba(255, 255, 255, .18);
-      animation-duration: 24s;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .avatar-img {
-      width: 285px;
-      height: 285px;
-      border-radius: 999px;
-      object-fit: cover;
-      object-position: center 35%;
-      border: 1px solid rgba(255, 255, 255, .18);
-      box-shadow: 0 0 70px rgba(166, 124, 82, .18);
-      background: rgba(255, 255, 255, .06);
-    }
-
-    .avatar-badge {
-      position: absolute;
-      right: 8px;
-      bottom: 74px;
-      padding: 14px 18px;
-      border-radius: 999px;
-      background: var(--primary-soft);
-      color: #17130f;
-      font-size: .75rem;
-      font-weight: 800;
-      box-shadow: 0 15px 42px rgba(166, 124, 82, .30);
-    }
-
-    .hero-social-card {
-      width: min(440px, 100%);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 18px;
-      background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, .075),
-        rgba(255, 255, 255, .035)
-      );
-      box-shadow: 0 20px 70px rgba(0, 0, 0, .16);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .hero-social-card small {
-      display: block;
-      color: var(--muted);
-      margin-bottom: 4px;
-      font-size: .78rem;
-    }
-
-    .hero-social-card strong {
-      color: var(--text);
-      font-size: .98rem;
-    }
-
-    .linkedin-mini {
-      min-height: 42px;
-      padding: 0 16px;
-      border-radius: 14px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      color: #17130f;
-      background: linear-gradient(135deg, var(--primary), var(--primary-soft));
-      white-space: nowrap;
-    }
-
-    section:not(.hero) {
-      padding: 108px 0;
-    }
-
-    .section-label {
-      color: var(--primary-soft);
-      font-size: .88rem;
-      margin-bottom: 18px;
-    }
-
-    .section-title {
-      font-family: "Syne", sans-serif;
-      font-size: clamp(2.4rem, 5vw, 4.9rem);
-      line-height: .98;
-      letter-spacing: -.055em;
-      margin-bottom: 36px;
-    }
-
-    .section-title em {
-      color: var(--primary-soft);
-      font-style: normal;
-    }
-
-    .about-panel {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: clamp(28px, 5vw, 56px);
-      background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, .075),
-        rgba(255, 255, 255, .035)
-      );
-      box-shadow: var(--shadow);
-    }
-
-    .about-layout {
-      display: grid;
-      grid-template-columns: .85fr 1.15fr;
-      gap: clamp(28px, 5vw, 62px);
-      align-items: start;
-    }
-
-    .about-title {
-      position: sticky;
-      top: 110px;
-    }
-
-    .about-title .section-title {
-      font-size: clamp(2.15rem, 4.2vw, 4.1rem);
-      margin-bottom: 18px;
-    }
-
-    .about-subtitle {
-      color: var(--muted);
-      line-height: 1.75;
-      max-width: 420px;
-    }
-
-    .about-content {
-      display: grid;
-      gap: 18px;
-    }
-
-    .about-content p {
-      color: var(--muted);
-      line-height: 1.85;
-      font-size: 1.02rem;
-    }
-
-    .about-content strong {
-      color: var(--text);
-    }
-
-    .about-highlights {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 8px;
-    }
-
-    .about-highlight {
-      padding: 16px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, .045);
-    }
-
-    .about-highlight strong {
-      display: block;
-      color: var(--primary-soft);
-      margin-bottom: 6px;
-      font-size: .95rem;
-    }
-
-    .about-highlight span {
-      color: var(--muted);
-      font-size: .86rem;
-      line-height: 1.5;
-    }
-
-    .skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .skill-tag,
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      min-height: 36px;
-      padding: 8px 13px;
-      border-radius: 999px;
-      border: 1px solid rgba(166, 124, 82, .25);
-      color: var(--primary-soft);
-      background: rgba(166, 124, 82, .07);
-      font-size: .86rem;
-      white-space: nowrap;
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    .project-card {
-      min-height: 560px;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 18px;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, .075),
-        rgba(255, 255, 255, .038)
-      );
-      box-shadow: 0 20px 70px rgba(0, 0, 0, .18);
-      overflow: hidden;
-      transition: .32s ease;
-    }
-
-    .project-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(166, 124, 82, .42);
-      background: linear-gradient(
-        180deg,
-        rgba(166, 124, 82, .105),
-        rgba(255, 255, 255, .045)
-      );
-    }
-
-    .project-media {
-      width: 100%;
-      height: 225px;
-      border-radius: 20px;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(166, 124, 82, .20),
-          rgba(255, 255, 255, .06)
-        ),
-        repeating-linear-gradient(
-          45deg,
-          rgba(255, 255, 255, .04) 0 8px,
-          transparent 8px 16px
-        );
-      border: 1px solid rgba(255, 255, 255, .11);
-      color: rgba(255, 255, 255, .62);
-      text-align: center;
-      padding: 18px;
-    }
-
-    .project-media.has-image {
-      padding: 0;
-      background: rgba(255, 255, 255, .04);
-    }
-
-    .project-thumbnail {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top center;
-      transition: .4s ease;
-    }
-
-    .project-card:hover .project-thumbnail,
-    .showcase-card:hover .project-thumbnail {
-      transform: scale(1.035);
-    }
-
-    .project-info {
-      padding: 24px 8px 4px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-tags {
-      min-height: 38px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-content: flex-start;
-      margin-bottom: 16px;
-    }
-
-    .project-info h3 {
-      font-family: "Syne", sans-serif;
-      font-size: 1.48rem;
-      letter-spacing: -.035em;
-      line-height: 1.12;
-      margin-bottom: 14px;
-    }
-
-    .project-info p {
-      color: var(--muted);
-      line-height: 1.68;
-      font-size: 1rem;
-      flex: 1;
-    }
-
-    .project-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .small-btn {
-      min-height: 48px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      font-weight: 800;
-      font-size: .92rem;
-      transition: .28s ease;
-      text-align: center;
-    }
-
-    .small-btn:hover {
-      transform: translateY(-3px);
-      color: var(--primary-soft);
-      border-color: rgba(166, 124, 82, .50);
-      background: rgba(166, 124, 82, .08);
-    }
-
-    .small-btn.primary-link {
-      color: #17130f;
-      border-color: transparent;
-      background: linear-gradient(
-        135deg,
-        var(--primary),
-        var(--primary-soft)
-      );
-    }
-
-    .small-btn.primary-link:hover {
-      color: #17130f;
-      box-shadow: 0 16px 34px rgba(166, 124, 82, .22);
-    }
-
-    .project-actions.single {
-      grid-template-columns: 1fr;
-    }
-
-    .showcase-grid {
-      display: grid;
-      grid-template-columns: 1.08fr .92fr;
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    .showcase-card {
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, .075),
-        rgba(255, 255, 255, .038)
-      );
-      padding: 18px;
-      min-height: 330px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      transition: .35s ease;
-      box-shadow: 0 20px 70px rgba(0, 0, 0, .16);
-    }
-
-    .showcase-card:hover {
-      transform: translateY(-7px);
-      border-color: rgba(166, 124, 82, .42);
-      background: linear-gradient(
-        180deg,
-        rgba(166, 124, 82, .105),
-        rgba(255, 255, 255, .045)
-      );
-    }
-
-    .showcase-card.big {
-      min-height: 690px;
-    }
-
-    .showcase-media {
-      width: 100%;
-      height: 390px;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, .11);
-      overflow: hidden;
-      background: rgba(255, 255, 255, .04);
-    }
-
-    .showcase-media.small {
-      height: 190px;
-    }
-
-    .showcase-body {
-      padding: 24px 8px 4px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .showcase-body h3 {
-      font-family: "Syne", sans-serif;
-      font-size: 1.5rem;
-      letter-spacing: -.035em;
-      line-height: 1.12;
-      margin: 14px 0 12px;
-    }
-
-    .showcase-body p {
-      color: var(--muted);
-      line-height: 1.65;
-      flex: 1;
-    }
-
-    .showcase-side {
-      display: grid;
-      gap: 24px;
-    }
-
-    .design-system-preview {
-      height: 190px;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, .11);
-      background:
-        radial-gradient(
-          circle at 25% 30%,
-          rgba(166, 124, 82, .22),
-          transparent 28%
-        ),
-        linear-gradient(
-          135deg,
-          rgba(255, 255, 255, .075),
-          rgba(255, 255, 255, .035)
-        );
-      padding: 18px;
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .ds-box {
-      border-radius: 16px;
-      background: rgba(255, 255, 255, .06);
-      border: 1px solid rgba(255, 255, 255, .10);
-      padding: 12px;
-      color: var(--muted);
-      font-size: .78rem;
-      line-height: 1.45;
-    }
-
-    .ds-title {
-      color: var(--primary-soft);
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .color-dots {
-      display: flex;
-      gap: 7px;
-      margin-top: 8px;
-    }
-
-    .color-dot {
-      width: 24px;
-      height: 24px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, .22);
-    }
-
-    .c1 {
-      background: #7a5230;
-    }
-
-    .c2 {
-      background: #a67c52;
-    }
-
-    .c3 {
-      background: #f3eadc;
-    }
-
-    .mini-button {
-      height: 24px;
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      background: #7a5230;
-      color: white;
-      font-size: .65rem;
-      margin-top: 8px;
-    }
-
-    .certifications-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
-    }
-
-    .cert-card {
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, .075),
-        rgba(255, 255, 255, .035)
-      );
-      padding: 24px;
-      display: grid;
-      grid-template-columns: 76px 1fr;
-      gap: 20px;
-      transition: .32s ease;
-      min-height: 210px;
-      box-shadow: 0 20px 70px rgba(0, 0, 0, .14);
-    }
-
-    .cert-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(166, 124, 82, .42);
-      background: linear-gradient(
-        180deg,
-        rgba(166, 124, 82, .105),
-        rgba(255, 255, 255, .045)
-      );
-    }
-
-    .cert-logo {
-      width: 76px;
-      height: 76px;
-      border-radius: 20px;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, .12);
-      background: rgba(166, 124, 82, .10);
-      color: var(--primary-soft);
-      font-family: "Syne", sans-serif;
-      font-weight: 800;
-      font-size: .9rem;
-      text-align: center;
-      line-height: 1.15;
-    }
-
-    .cert-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .cert-content h3 {
-      font-family: "Syne", sans-serif;
-      font-size: 1.28rem;
-      letter-spacing: -.035em;
-      line-height: 1.15;
-      margin-bottom: 8px;
-    }
-
-    .cert-issuer {
-      color: var(--primary-soft);
-      font-weight: 700;
-      margin-bottom: 8px;
-      line-height: 1.45;
-    }
-
-    .cert-date {
-      color: var(--muted);
-      font-size: .92rem;
-      margin-bottom: 14px;
-      line-height: 1.55;
-    }
-
-    .cert-skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .cert-link {
-      display: inline-flex;
-      margin-top: 14px;
-      color: var(--primary-soft);
-      font-weight: 800;
-      font-size: .92rem;
-    }
-
-    /* EXPERIENCE */
-    .timeline {
-      display: grid;
-      gap: 18px;
-    }
-
-    .timeline-card {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 24px;
-      padding: 26px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--card);
-      transition: .35s ease;
-    }
-
-    .timeline-card:hover {
-      transform: translateX(8px);
-      border-color: rgba(166, 124, 82, .36);
-    }
-
-    .year {
-      color: var(--primary-soft);
-    }
-
-    .timeline-card h3 {
-      font-family: "Syne", sans-serif;
-      font-size: 1.55rem;
-      margin-bottom: 8px;
-    }
-
-    .company {
-      color: var(--text);
-      margin-bottom: 12px;
-    }
-
-    .timeline-card p {
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .contact-wrap {
-      display: grid;
-      grid-template-columns: .9fr 1.1fr;
-      gap: 42px;
-      align-items: start;
-    }
-
-    .contact-left p {
-      color: var(--muted);
-      line-height: 1.75;
-      margin-bottom: 26px;
-    }
-
-    .contact-links {
-      display: grid;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .contact-link {
-      padding: 16px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      color: var(--muted);
-      background: rgba(255, 255, 255, .035);
-      transition: .3s ease;
-    }
-
-    .contact-link:hover {
-      color: var(--primary-soft);
-      border-color: rgba(166, 124, 82, .45);
-      transform: translateX(5px);
-    }
-
-    .contact-form {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 26px;
-      background: var(--card);
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .form-group {
-      margin-bottom: 16px;
-    }
-
-    label {
-      display: block;
-      color: var(--muted);
-      font-size: .77rem;
-      margin-bottom: 8px;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 15px;
-      padding: 16px;
-      background: rgba(255, 255, 255, .045);
-      color: var(--text);
-      outline: none;
-      font-family: inherit;
-      resize: vertical;
-      transition: .3s ease;
-    }
-
-    input:focus,
-    textarea:focus {
-      border-color: rgba(166, 124, 82, .55);
-      box-shadow: 0 0 0 4px rgba(166, 124, 82, .08);
-    }
-
-    .full {
-      width: 100%;
-    }
-
-    .form-success {
-      display: none;
-      margin-top: 16px;
-      padding: 14px;
-      border-radius: 14px;
-      background: rgba(166, 124, 82, .10);
-      border: 1px solid rgba(166, 124, 82, .32);
-      color: var(--primary-soft);
-    }
-
-    footer {
-      padding: 30px 0;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-    }
-
-    .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 18px;
-    }
-
-    .footer-links a:hover {
-      color: var(--primary-soft);
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: .75s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 1080px) {
-      .projects-grid,
-      .certifications-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 980px) {
-      .hero,
-      .about-layout,
-      .contact-wrap,
-      .showcase-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding-top: 120px;
-      }
-
-      .hero-visual {
-        margin-top: 10px;
-      }
-
-      .about-title {
-        position: static;
-      }
-
-      .timeline-card {
-        grid-template-columns: 1fr;
-      }
-
-      .showcase-card.big {
-        min-height: auto;
-      }
-    }
-
-    @media (max-width: 720px) {
-      .nav-links {
-        display: none;
-      }
-
-      .burger {
-        display: block;
-      }
-
-      .hero {
-        width: min(calc(100% - 28px), 1280px);
-        gap: 2.5rem;
-      }
-
-      .hero-title {
-        font-size: clamp(2.4rem, 12vw, 3.2rem);
-        letter-spacing: -.055em;
-      }
-
-      .projects-grid,
-      .certifications-grid,
-      .about-highlights,
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-
-      .avatar-img {
-        width: 230px;
-        height: 230px;
-      }
-
-      .avatar-badge {
-        right: 4px;
-        bottom: 74px;
-      }
-
-      .hero-social-card {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .project-card {
-        min-height: auto;
-      }
-
-      .project-media {
-        height: 205px;
-      }
-
-      .showcase-media {
-        height: 260px;
-      }
-
-      .showcase-media.small,
-      .design-system-preview {
-        height: 205px;
-      }
-
-      .cert-card {
-        grid-template-columns: 1fr;
-      }
-
-      section:not(.hero) {
-        padding: 82px 0;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nadiyah | Web Developer & UI/UX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#17130f;--bg-soft:#241c16;--card:rgba(245,232,210,.07);--card-hover:rgba(166,124,82,.13);--text:#f3eadc;--muted:#b8aa98;--line:rgba(231,213,188,.16);--primary:#a67c52;--primary-soft:#d8b88a;--shadow:0 28px 90px rgba(28,19,12,.36);--radius:28px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"Inter",sans-serif;color:var(--text);background:radial-gradient(circle at 10% 10%,rgba(166,124,82,.16),transparent 30%),radial-gradient(circle at 80% 20%,rgba(138,154,91,.10),transparent 28%),radial-gradient(circle at 50% 90%,rgba(201,130,74,.12),transparent 32%),var(--bg);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-2;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:80px 80px;mask-image:linear-gradient(to bottom,black 0%,transparent 85%);pointer-events:none}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.mono{font-family:"DM Mono",monospace;letter-spacing:.08em}
+.container{width:min(1180px,calc(100% - 44px));margin:0 auto}
+header{position:fixed;inset:0 0 auto 0;z-index:99;background:rgba(23,19,15,.78);backdrop-filter:blur(20px);border-bottom:1px solid var(--line)}
+.nav-inner{width:min(1280px,calc(100% - 44px));height:76px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:"Syne",sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-.04em;color:var(--primary-soft)}
+.nav-links{display:flex;gap:34px;color:var(--muted);font-size:.87rem}
+.nav-links a{transition:.25s ease;white-space:nowrap}
+.nav-links a:hover{color:var(--primary-soft)}
+.burger{display:none;width:44px;height:44px;border-radius:14px;border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer}
+.burger span{display:block;width:18px;height:2px;background:currentColor;margin:4px auto}
+.mobile-menu{position:fixed;z-index:98;top:86px;left:18px;right:18px;padding:14px;border:1px solid var(--line);border-radius:22px;background:rgba(36,28,22,.96);backdrop-filter:blur(18px);opacity:0;transform:translateY(-10px);pointer-events:none;transition:.25s ease}
+.mobile-menu.active{opacity:1;transform:translateY(0);pointer-events:auto}
+.mobile-menu a{display:block;padding:15px;color:var(--muted);border-bottom:1px solid var(--line)}
+.mobile-menu a:last-child{border-bottom:0}
+.hero{min-height:100vh;width:min(1280px,calc(100% - 44px));margin:0 auto;padding:128px 0 72px;display:grid;grid-template-columns:1.02fr .98fr;gap:5rem;align-items:center}
+.eyebrow{display:inline-flex;gap:12px;align-items:center;color:var(--muted);margin-bottom:22px;font-size:.92rem}
+.dot{width:10px;height:10px;border-radius:99px;background:var(--primary);box-shadow:0 0 22px rgba(166,124,82,.65)}
+.hero-title{font-family:"Syne",sans-serif;font-size:clamp(2.6rem,4.9vw,4.95rem);line-height:1.03;letter-spacing:-.065em;max-width:850px}
+.hero-title span{color:var(--primary-soft);text-shadow:0 0 35px rgba(166,124,82,.25)}
+.hero-desc{margin-top:26px;max-width:640px;color:var(--muted);font-size:1.08rem;line-height:1.75}
+.hero-actions{margin-top:38px;display:flex;gap:16px;flex-wrap:wrap}
+.btn{min-height:56px;padding:0 26px;display:inline-flex;align-items:center;justify-content:center;gap:12px;border-radius:16px;border:1px solid var(--line);font-weight:800;transition:.3s ease}
+.btn svg{width:18px;height:18px}
+.btn:hover{transform:translateY(-4px)}
+.btn:disabled{opacity:.7;cursor:not-allowed;transform:none}
+.btn-primary{color:#17130f;background:linear-gradient(135deg,var(--primary),var(--primary-soft));border-color:transparent;box-shadow:0 18px 45px rgba(166,124,82,.22)}
+.btn-ghost:hover{color:var(--primary-soft);background:rgba(166,124,82,.08);border-color:rgba(166,124,82,.45)}
+.hero-visual{display:flex;flex-direction:column;align-items:center;gap:28px}
+.avatar-wrap{width:min(410px,80vw);aspect-ratio:1;position:relative;display:grid;place-items:center}
+.avatar-ring{position:absolute;inset:0;border:1px solid rgba(166,124,82,.16);border-radius:999px;animation:spin 18s linear infinite}
+.ring-2{inset:26px;border-style:dashed;animation-duration:28s;animation-direction:reverse}
+.ring-3{inset:52px;border-color:rgba(255,255,255,.18);animation-duration:24s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.avatar-img{width:285px;height:285px;border-radius:999px;object-fit:cover;object-position:center 35%;border:1px solid rgba(255,255,255,.18);box-shadow:0 0 70px rgba(166,124,82,.18);background:rgba(255,255,255,.06)}
+.avatar-badge{position:absolute;right:8px;bottom:74px;padding:14px 18px;border-radius:999px;background:var(--primary-soft);color:#17130f;font-size:.75rem;font-weight:800;box-shadow:0 15px 42px rgba(166,124,82,.30)}
+.hero-social-card{width:min(440px,100%);border:1px solid var(--line);border-radius:22px;padding:18px;background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.035));box-shadow:0 20px 70px rgba(0,0,0,.16);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.hero-social-card small{display:block;color:var(--muted);margin-bottom:4px;font-size:.78rem}
+.hero-social-card strong{color:var(--text);font-size:.98rem}
+.linkedin-mini{min-height:42px;padding:0 16px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-weight:800;color:#17130f;background:linear-gradient(135deg,var(--primary),var(--primary-soft));white-space:nowrap}
+section:not(.hero){padding:108px 0}
+.section-label{color:var(--primary-soft);font-size:.88rem;margin-bottom:18px}
+.section-title{font-family:"Syne",sans-serif;font-size:clamp(2.4rem,5vw,4.9rem);line-height:.98;letter-spacing:-.055em;margin-bottom:36px}
+.section-title em{color:var(--primary-soft);font-style:normal}
+.about-panel{border:1px solid var(--line);border-radius:var(--radius);padding:clamp(28px,5vw,56px);background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.035));box-shadow:var(--shadow)}
+.about-layout{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(28px,5vw,62px);align-items:start}
+.about-title{position:sticky;top:110px}
+.about-title .section-title{font-size:clamp(2.15rem,4.2vw,4.1rem);margin-bottom:18px}
+.about-subtitle{color:var(--muted);line-height:1.75;max-width:420px}
+.about-content{display:grid;gap:18px}
+.about-content p{color:var(--muted);line-height:1.85;font-size:1.02rem}
+.about-content strong{color:var(--text)}
+.about-highlights{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+.about-highlight{padding:16px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.045)}
+.about-highlight strong{display:block;color:var(--primary-soft);margin-bottom:6px;font-size:.95rem}
+.about-highlight span{color:var(--muted);font-size:.86rem;line-height:1.5}
+.skills{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.skill-tag,.tag{display:inline-flex;align-items:center;min-height:36px;padding:8px 13px;border-radius:999px;border:1px solid rgba(166,124,82,.25);color:var(--primary-soft);background:rgba(166,124,82,.07);font-size:.86rem;white-space:nowrap}
+.projects-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch}
+.project-card{min-height:560px;height:100%;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--radius);padding:18px;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.038));box-shadow:0 20px 70px rgba(0,0,0,.18);overflow:hidden;transition:.32s ease}
+.project-card:hover{transform:translateY(-8px);border-color:rgba(166,124,82,.42);background:linear-gradient(180deg,rgba(166,124,82,.105),rgba(255,255,255,.045))}
+.project-media{width:100%;height:225px;border-radius:20px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(135deg,rgba(166,124,82,.20),rgba(255,255,255,.06)),repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 8px,transparent 8px 16px);border:1px solid rgba(255,255,255,.11);color:rgba(255,255,255,.62);text-align:center;padding:18px}
+.project-media.has-image{padding:0;background:rgba(255,255,255,.04)}
+.project-thumbnail{width:100%;height:100%;object-fit:cover;object-position:top center;transition:.4s ease}
+.project-card:hover .project-thumbnail,.showcase-card:hover .project-thumbnail{transform:scale(1.035)}
+.project-info{padding:24px 8px 4px;flex:1;display:flex;flex-direction:column}
+.project-tags{min-height:38px;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;margin-bottom:16px}
+.project-info h3{font-family:"Syne",sans-serif;font-size:1.48rem;letter-spacing:-.035em;line-height:1.12;margin-bottom:14px}
+.project-info p{color:var(--muted);line-height:1.68;font-size:1rem;flex:1}
+.project-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.small-btn{min-height:48px;display:grid;place-items:center;border-radius:14px;border:1px solid var(--line);font-weight:800;font-size:.92rem;transition:.28s ease;text-align:center}
+.small-btn:hover{transform:translateY(-3px);color:var(--primary-soft);border-color:rgba(166,124,82,.50);background:rgba(166,124,82,.08)}
+.small-btn.primary-link{color:#17130f;border-color:transparent;background:linear-gradient(135deg,var(--primary),var(--primary-soft))}
+.small-btn.primary-link:hover{color:#17130f;box-shadow:0 16px 34px rgba(166,124,82,.22)}
+.project-actions.single{grid-template-columns:1fr}
+.showcase-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:24px;align-items:stretch}
+.showcase-card{border-radius:var(--radius);border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.038));padding:18px;min-height:330px;display:flex;flex-direction:column;overflow:hidden;transition:.35s ease;box-shadow:0 20px 70px rgba(0,0,0,.16)}
+.showcase-card:hover{transform:translateY(-7px);border-color:rgba(166,124,82,.42);background:linear-gradient(180deg,rgba(166,124,82,.105),rgba(255,255,255,.045))}
+.showcase-card.big{min-height:690px}
+.showcase-media{width:100%;height:390px;border-radius:20px;border:1px solid rgba(255,255,255,.11);overflow:hidden;background:rgba(255,255,255,.04)}
+.showcase-media.small{height:190px}
+.showcase-body{padding:24px 8px 4px;flex:1;display:flex;flex-direction:column}
+.showcase-body h3{font-family:"Syne",sans-serif;font-size:1.5rem;letter-spacing:-.035em;line-height:1.12;margin:14px 0 12px}
+.showcase-body p{color:var(--muted);line-height:1.65;flex:1}
+.showcase-side{display:grid;gap:24px}
+.design-system-preview{height:190px;border-radius:20px;border:1px solid rgba(255,255,255,.11);background:radial-gradient(circle at 25% 30%,rgba(166,124,82,.22),transparent 28%),linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.035));padding:18px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ds-box{border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);padding:12px;color:var(--muted);font-size:.78rem;line-height:1.45}
+.ds-title{color:var(--primary-soft);font-weight:800;margin-bottom:10px}
+.color-dots{display:flex;gap:7px;margin-top:8px}
+.color-dot{width:24px;height:24px;border-radius:999px;border:1px solid rgba(255,255,255,.22)}
+.c1{background:#7a5230}.c2{background:#a67c52}.c3{background:#f3eadc}
+.mini-button{height:24px;border-radius:8px;display:grid;place-items:center;background:#7a5230;color:white;font-size:.65rem;margin-top:8px}
+.certifications-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.cert-card{border-radius:var(--radius);border:1px solid var(--line);background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.035));padding:24px;display:grid;grid-template-columns:76px 1fr;gap:20px;transition:.32s ease;min-height:210px;box-shadow:0 20px 70px rgba(0,0,0,.14)}
+.cert-card:hover{transform:translateY(-6px);border-color:rgba(166,124,82,.42);background:linear-gradient(180deg,rgba(166,124,82,.105),rgba(255,255,255,.045))}
+.cert-logo{width:76px;height:76px;border-radius:20px;display:grid;place-items:center;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:rgba(166,124,82,.10);color:var(--primary-soft);font-family:"Syne",sans-serif;font-weight:800;font-size:.9rem;text-align:center;line-height:1.15}
+.cert-logo img{width:100%;height:100%;object-fit:cover}
+.cert-content h3{font-family:"Syne",sans-serif;font-size:1.28rem;letter-spacing:-.035em;line-height:1.15;margin-bottom:8px}
+.cert-issuer{color:var(--primary-soft);font-weight:700;margin-bottom:8px;line-height:1.45}
+.cert-date{color:var(--muted);font-size:.92rem;margin-bottom:14px;line-height:1.55}
+.cert-skills{display:flex;flex-wrap:wrap;gap:8px}
+.cert-link{display:inline-flex;margin-top:14px;color:var(--primary-soft);font-weight:800;font-size:.92rem}
+.timeline{display:grid;gap:18px}
+.timeline-card{display:grid;grid-template-columns:180px 1fr;gap:24px;padding:26px;border:1px solid var(--line);border-radius:var(--radius);background:var(--card);transition:.35s ease}
+.timeline-card:hover{transform:translateX(8px);border-color:rgba(166,124,82,.36)}
+.year{color:var(--primary-soft)}
+.timeline-card h3{font-family:"Syne",sans-serif;font-size:1.55rem;margin-bottom:8px}
+.company{color:var(--text);margin-bottom:12px}
+.timeline-card p{color:var(--muted);line-height:1.7}
+.contact-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:42px;align-items:start}
+.contact-left p{color:var(--muted);line-height:1.75;margin-bottom:26px}
+.contact-links{display:grid;gap:12px;margin-top:24px}
+.contact-link{padding:16px;border:1px solid var(--line);border-radius:16px;color:var(--muted);background:rgba(255,255,255,.035);transition:.3s ease}
+.contact-link:hover{color:var(--primary-soft);border-color:rgba(166,124,82,.45);transform:translateX(5px)}
+.contact-form{border:1px solid var(--line);border-radius:var(--radius);padding:26px;background:var(--card)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{margin-bottom:16px}
+label{display:block;color:var(--muted);font-size:.77rem;margin-bottom:8px}
+input,textarea{width:100%;border:1px solid var(--line);border-radius:15px;padding:16px;background:rgba(255,255,255,.045);color:var(--text);outline:none;font-family:inherit;resize:vertical;transition:.3s ease}
+input:focus,textarea:focus{border-color:rgba(166,124,82,.55);box-shadow:0 0 0 4px rgba(166,124,82,.08)}
+.full{width:100%}
+.form-success{display:none;margin-top:16px;padding:14px;border-radius:14px;background:rgba(166,124,82,.10);border:1px solid rgba(166,124,82,.32);color:var(--primary-soft)}
+footer{padding:30px 0;border-top:1px solid var(--line);color:var(--muted)}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.footer-links{display:flex;gap:18px}
+.footer-links a:hover{color:var(--primary-soft)}
+.reveal{opacity:0;transform:translateY(24px);transition:.75s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:1080px){.projects-grid,.certifications-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:980px){.hero,.about-layout,.contact-wrap,.showcase-grid{grid-template-columns:1fr}.hero{padding-top:120px}.hero-visual{margin-top:10px}.about-title{position:static}.timeline-card{grid-template-columns:1fr}.showcase-card.big{min-height:auto}}
+@media(max-width:720px){.nav-links{display:none}.burger{display:block}.hero{width:min(calc(100% - 28px),1280px);gap:2.5rem}.hero-title{font-size:clamp(2.4rem,12vw,3.2rem);letter-spacing:-.055em}.projects-grid,.certifications-grid,.about-highlights,.form-row{grid-template-columns:1fr}.avatar-img{width:230px;height:230px}.avatar-badge{right:4px;bottom:74px}.hero-social-card{flex-direction:column;align-items:stretch}.project-card{min-height:auto}.project-media{height:205px}.showcase-media{height:260px}.showcase-media.small,.design-system-preview{height:205px}.cert-card{grid-template-columns:1fr}section:not(.hero){padding:82px 0}.footer-inner{flex-direction:column;align-items:flex-start}}
+</style>
 </head>
-
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="nav-inner">
-
-      <a href="#home" class="logo">Nadiyah</a>
-
-      <nav class="nav-links mono">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#showcase">UI/UX</a>
-        <a href="#certifications">Certifications</a>
-        <a href="#experience">Experience</a>
-        <a href="#contact">Contact</a>
-      </nav>
-
-      <button class="burger" id="burger" aria-label="Open Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-    </div>
-  </header>
-
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#about">01. About</a>
-    <a href="#projects">02. Projects</a>
-    <a href="#showcase">03. UI/UX</a>
-    <a href="#certifications">04. Certifications</a>
-    <a href="#experience">05. Experience</a>
-    <a href="#contact">06. Contact</a>
-  </div>
-
-  <main>
-
-    <!-- HERO -->
-    <section class="hero" id="home">
-
-      <div class="hero-content">
-
-        <div class="eyebrow mono reveal">
-          <span class="dot"></span>
-          Available for opportunities
-        </div>
-
-        <h1 class="hero-title reveal">
-          Web <span>Developer</span> & UI/UX Designer
-        </h1>
-
-        <p class="hero-desc reveal">
-          Informatics Engineering graduate with experience in web-based application development,
-          system analysis, UI/UX design, BPMN mapping, and responsive interface implementation.
-        </p>
-
-        <div class="hero-actions reveal">
-
-          <a href="#projects" class="btn btn-primary">
-            <span>View Work</span>
-
-            <svg viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </a>
-
-          <a
-            href="https://www.linkedin.com/in/nadiyah-321731286/"
-            target="_blank"
-            class="btn btn-ghost">
-            LinkedIn Profile
-          </a>
-
-        </div>
-
-      </div>
-
-      <div class="hero-visual reveal">
-
-        <div class="avatar-wrap">
-
-          <div class="avatar-ring ring-1"></div>
-          <div class="avatar-ring ring-2"></div>
-          <div class="avatar-ring ring-3"></div>
-
-          <img
-            class="avatar-img"
-            src="image/ava.jpg"
-            alt="Nadiyah Profile Photo">
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about">
-
-      <div class="container">
-
-        <div class="section-label mono reveal">
-          // 01 — About Me
-        </div>
-
-        <div class="about-panel reveal">
-
-          <div class="about-layout">
-
-            <div class="about-title">
-
-              <h2 class="section-title">
-                Crafting Digital<br>
-                <em>Products</em>
-              </h2>
-
-              <p class="about-subtitle">
-                I combine interface design, system analysis, and web development
-                to build structured, usable, and visually clean digital experiences.
-              </p>
-
-            </div>
-
-            <div class="about-content">
-
-              <p>
-                I am a Diploma in Informatics Engineering graduate from the University
-                of Logistics and International Business, with experience in developing
-                web-based applications using frameworks such as
-                <strong>Laravel</strong> and <strong>CodeIgniter</strong>.
-                I am also skilled in <strong>HTML</strong>, <strong>CSS</strong>,
-                <strong>JavaScript</strong>, <strong>PHP</strong>, and
-                <strong>MySQL</strong>.
-              </p>
-
-              <p>
-                I have experience in <strong>System Analysis</strong>, especially in
-                mapping business processes using <strong>BPMN</strong> through
-                Bizagi and Visual Paradigm. I am also experienced in creating
-                prototype designs with <strong>Figma</strong> and preparing
-                system documentation using <strong>MS Office</strong>.
-              </p>
-
-              <p>
-                Through professional experience, internship, organizational activities,
-                and UI/UX projects, I have developed the ability to translate business
-                needs into structured, functional, and user-friendly digital products.
-              </p>
-
-              <div class="about-highlights">
-
-                <div class="about-highlight">
-                  <strong>Web Development</strong>
-                  <span>
-                    Laravel, CodeIgniter, PHP, MySQL, and responsive interfaces.
-                  </span>
-                </div>
-
-                <div class="about-highlight">
-                  <strong>UI/UX Design</strong>
-                  <span>
-                    Figma prototyping, design systems, mobile UI, and dashboard design.
-                  </span>
-                </div>
-
-                <div class="about-highlight">
-                  <strong>System Analysis</strong>
-                  <span>
-                    BPMN, business process mapping, requirements, and documentation.
-                  </span>
-                </div>
-
-              </div>
-
-              <div class="skills">
-
-                <span class="skill-tag">Laravel</span>
-                <span class="skill-tag">CodeIgniter</span>
-                <span class="skill-tag">HTML</span>
-                <span class="skill-tag">CSS</span>
-                <span class="skill-tag">JavaScript</span>
-                <span class="skill-tag">PHP</span>
-                <span class="skill-tag">MySQL</span>
-                <span class="skill-tag">System Analyst</span>
-                <span class="skill-tag">BPMN</span>
-                <span class="skill-tag">Bizagi</span>
-                <span class="skill-tag">Visual Paradigm</span>
-                <span class="skill-tag">Figma</span>
-                <span class="skill-tag">MS Office</span>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects">
-
-      <div class="container">
-
-        <div class="section-label mono reveal">
-          // 02 — Portfolio
-        </div>
-
-        <h2 class="section-title reveal">
-          Selected<br>
-          <em>Projects</em>
-        </h2>
-
-        <div class="projects-grid">
-
-          <!-- POLAKAMI -->
-          <article class="project-card reveal">
-
-            <div class="project-media has-image">
-
-              <img
-                src="./polakami.png"
-                alt="POLAKAMI Dashboard"
-                class="project-thumbnail">
-
-            </div>
-
-            <div class="project-info">
-
-              <div class="project-tags">
-                <span class="tag">Figma</span>
-                <span class="tag">UI/UX</span>
-              </div>
-
-              <h3>POLAKAMI Dashboard</h3>
-
-              <p>
-                A public service dashboard concept for POLAKAMI, designed to support
-                monitoring, interaction history, service analytics, and a more intuitive
-                admin experience.
-              </p>
-
-              <div class="project-actions">
-
-                <a
-                  href="https://www.figma.com/design/uH1OuVNuD8w761Ndjpq8ye/DASHBOARD-ADMIN?node-id=39-186&p=f&t=BuBunPrDVTzbpGqw-0"
-                  target="_blank"
-                  class="small-btn primary-link">
-                  Figma
-                </a>
-
-                <a
-                  href="./LAPORAN_PKL_FIX.pdf"
-                  target="_blank"
-                  class="small-btn">
-                  View Docs
-                </a>
-
-              </div>
-
-            </div>
-
-          </article>
-
-          <!-- BEASISWA -->
-          <article class="project-card reveal">
-
-            <div class="project-media has-image">
-
-              <img
-                src="./beasiswa.png"
-                alt="Scholarship Decision Support System"
-                class="project-thumbnail">
-
-            </div>
-
-            <div class="project-info">
-
-              <div class="project-tags">
-                <span class="tag">Laravel</span>
-                <span class="tag">SQLite</span>
-                <span class="tag">SAW</span>
-              </div>
-
-              <h3>Scholarship DSS with SAW</h3>
-
-              <p>
-                A scholarship decision support system using the Simple Additive
-                Weighting method to help evaluate applicants based on criteria,
-                weights, and final ranking results.
-              </p>
-
-              <div class="project-actions">
-
-                <a
-                  href="#"
-                  class="small-btn placeholder-link">
-                  Live Demo
-                </a>
-
-                <a
-                  href="https://github.com/Nadiyahd3ti/beasiswa-saw"
-                  target="_blank"
-                  class="small-btn primary-link">
-                  GitHub
-                </a>
-
-              </div>
-
-            </div>
-
-          </article>
-
-          <!-- COMMUNITY -->
-          <article class="project-card reveal">
-
-            <div class="project-media has-image">
-
-              <img
-                src="./surosowan.png"
-                alt="CommUnity UI/UX Case Study"
-                class="project-thumbnail">
-
-            </div>
-
-            <div class="project-info">
-
-              <div class="project-tags">
-                <span class="tag">UI/UX</span>
-                <span class="tag">Figma</span>
-                <span class="tag">Case Study</span>
-              </div>
-
-              <h3>CommUnity App</h3>
-
-              <p>
-                A mobile UI/UX project at Academy Surosowan Cyber focused on onboarding,
-                community discovery, forum discussions, event features, and intuitive
-                mobile navigation.
-              </p>
-
-              <div class="project-actions">
-
-                <a
-                  href="https://aware-blizzard-0eb.notion.site/CommUnity-UX-Case-Study-6e6787e1a5b44651bc50cecd262e4cd1?source=copy_link"
-                  target="_blank"
-                  class="small-btn primary-link">
-                  Live Demo
-                </a>
-
-                <a
-                  href="#"
-                  class="small-btn placeholder-link">
-                  GitHub
-                </a>
-
-              </div>
-
-            </div>
-
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- UI/UX SHOWCASE -->
-    <section id="showcase">
-
-      <div class="container">
-
-        <div class="section-label mono reveal">
-          // 03 — UI/UX Showcase
-        </div>
-
-        <h2 class="section-title reveal">
-          Design<br>
-          <em>Showcase</em>
-        </h2>
-
-        <div class="showcase-grid">
-
-          <!-- COMMUNITY -->
-          <article class="showcase-card big reveal">
-
-            <div class="showcase-media">
-
-              <img
-                src="./surosowan.png"
-                alt="CommUnity Mobile App UI"
-                class="project-thumbnail">
-
-            </div>
-
-            <div class="showcase-body">
-
-              <div class="project-tags">
-                <span class="tag">Mobile UI</span>
-                <span class="tag">UX Case Study</span>
-                <span class="tag">Prototype</span>
-              </div>
-
-              <h3>CommUnity Mobile App Interface</h3>
-
-              <p>
-                Mobile application design for community discovery and social interaction.
-                This showcase highlights onboarding flow, interest selection, community
-                search, event features, and clean mobile navigation.
-              </p>
-
-              <div class="project-actions">
-
-                <a
-                  href="https://aware-blizzard-0eb.notion.site/CommUnity-UX-Case-Study-6e6787e1a5b44651bc50cecd262e4cd1?source=copy_link"
-                  target="_blank"
-                  class="small-btn primary-link">
-                  View Case Study
-                </a>
-
-                <a
-                  href="https://www.figma.com/design/psSgg3aoVyMgZ57IyQBOmD/CommUnity?node-id=130-212&p=f&t=nDLFovp1g3OT7rXN-0"
-                  target="_blank"
-                  class="small-btn">
-                  Open Figma
-                </a>
-
-              </div>
-
-            </div>
-
-          </article>
-
-          <div class="showcase-side">
-
-            <!-- POLAKAMI -->
-            <article class="showcase-card reveal">
-
-              <div class="showcase-media small">
-
-                <img
-                  src="./polakami.png"
-                  alt="POLAKAMI Dashboard Design"
-                  class="project-thumbnail">
-
-              </div>
-
-              <div class="showcase-body">
-
-                <div class="project-tags">
-                  <span class="tag">Dashboard</span>
-                  <span class="tag">Figma</span>
-                </div>
-
-                <h3>POLAKAMI Dashboard Design</h3>
-
-                <p>
-                  Dashboard admin interface for monitoring public service usage,
-                  interaction history, and service analytics.
-                </p>
-
-                <div class="project-actions single">
-
-                  <a
-                    href="https://www.figma.com/design/uH1OuVNuD8w761Ndjpq8ye/DASHBOARD-ADMIN?node-id=39-186&p=f&t=BuBunPrDVTzbpGqw-0"
-                    target="_blank"
-                    class="small-btn primary-link">
-                    Open Figma
-                  </a>
-
-                </div>
-
-              </div>
-
-            </article>
-
-            <!-- DESIGN SYSTEM -->
-            <article class="showcase-card reveal">
-
-              <div class="design-system-preview">
-
-                <div class="ds-box">
-
-                  <div class="ds-title">
-                    Color Palette
-                  </div>
-
-                  Primary blue, soft gray, white surface,
-                  and clean contrast.
-
-                  <div class="color-dots">
-
-                    <span class="color-dot c1"></span>
-                    <span class="color-dot c2"></span>
-                    <span class="color-dot c3"></span>
-
-                  </div>
-
-                </div>
-
-                <div class="ds-box">
-
-                  <div class="ds-title">
-                    Components
-                  </div>
-
-                  Buttons, search bars, inputs, dropdowns,
-                  headers, and bottom navigation.
-
-                  <div class="mini-button">
-                    Button
-                  </div>
-
-                </div>
-
-              </div>
-
-              <div class="showcase-body">
-
-                <div class="project-tags">
-                  <span class="tag">Design System</span>
-                  <span class="tag">Components</span>
-                </div>
-
-                <h3>CommUnity Design System</h3>
-
-                <p>
-                  A reusable design system consisting of typography,
-                  components, form elements, dropdowns, and mobile
-                  interface patterns.
-                </p>
-
-                <div class="project-actions single">
-
-                  <a
-                    href="https://www.figma.com/design/psSgg3aoVyMgZ57IyQBOmD/CommUnity?node-id=130-212&p=f&t=nDLFovp1g3OT7rXN-0"
-                    target="_blank"
-                    class="small-btn primary-link">
-                    Open Figma
-                  </a>
-
-                </div>
-
-              </div>
-
-            </article>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- CERTIFICATIONS -->
-    <section id="certifications">
-
-      <div class="container">
-
-        <div class="section-label mono reveal">
-          // 04 — Licenses & Certifications
-        </div>
-
-        <h2 class="section-title reveal">
-          Professional<br>
-          <em>Certifications</em>
-        </h2>
-
-        <div class="certifications-grid">
-
-          <!-- BNSP -->
-          <article class="cert-card reveal">
-
-            <div class="cert-logo">
-              BNSP
-            </div>
-
-            <div class="cert-content">
-
-              <h3>
-                Junior Computer Network Technician
-              </h3>
-
-              <div class="cert-issuer">
-                Badan Nasional Sertifikasi Profesi (BNSP)
-              </div>
-
-              <div class="cert-date">
-                Issued Oct 2025 · Expires Oct 2028
-              </div>
-
-              <div class="cert-skills">
-
-                <span class="tag">
-                  Computer Network
-                </span>
-
-                <span class="tag">
-                  Network Technician
-                </span>
-
-              </div>
-
-            </div>
-
-          </article>
-
-          <!-- SUROOSOWAN -->
-          <article class="cert-card reveal">
-
-            <div class="cert-logo">
-
-              <img
-                src="./Surosowan.png"
-                alt="Surosowan Cyber Certificate"
-                onerror="this.style.display='none'; this.parentElement.textContent='SC';">
-
-            </div>
-
-            <div class="cert-content">
-
-              <h3>
-                UI/UX Design
-              </h3>
-
-              <div class="cert-issuer">
-                Surosowan Cyber
-              </div>
-
-              <div class="cert-date">
-                Issued Oct 2024 · Expires Oct 2025
-              </div>
-
-              <div class="cert-skills">
-
-                <span class="tag">
-                  Figma
-                </span>
-
-                <span class="tag">
-                  User Experience Design
-                </span>
-
-                <span class="tag">
-                  UI Design
-                </span>
-
-              </div>
-
-            </div>
-
-          </article>
-
-          <!-- SAP -->
-          <article class="cert-card reveal">
-
-            <div class="cert-logo">
-
-              <img
-                src="./SAP.jpg"
-                alt="SAP ABAP Certificate"
-                onerror="this.style.display='none'; this.parentElement.textContent='SAP';">
-
-            </div>
-
-            <div class="cert-content">
-
-              <h3>
-                SAP: BC400 - Introduction to the ABAP Workbench
-              </h3>
-
-              <div class="cert-issuer">
-                University of Logistics and International Business (ULBI)
-              </div>
-
-              <div class="cert-date">
-                Issued Jul 2024 · Expires Jul 2025
-              </div>
-
-              <div class="cert-skills">
-
-                <span class="tag">
-                  SAP
-                </span>
-
-                <span class="tag">
-                  ABAP Workbench
-                </span>
-
-              </div>
-
-            </div>
-
-          </article>
-
-          <!-- CODING STUDIO -->
-          <article class="cert-card reveal">
-
-            <div class="cert-logo">
-              CS
-            </div>
-
-            <div class="cert-content">
-
-              <h3>
-                Intro to Programming Class
-              </h3>
-
-              <div class="cert-issuer">
-                Coding Studio
-              </div>
-
-              <div class="cert-date">
-                Issued Feb 2024 · Expires Feb 2025
-              </div>
-
-              <div class="cert-skills">
-
-                <span class="tag">
-                  PHP
-                </span>
-
-                <span class="tag">
-                  HTML
-                </span>
-
-                <span class="tag">
-                  Programming Basics
-                </span>
-
-              </div>
-
-            </div>
-
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- EXPERIENCE -->
-    <section id="experience">
-
-      <div class="container">
-
-        <div class="section-label mono reveal">
-          // 05 — Experience
-        </div>
-
-        <h2 class="section-title reveal">
-          Career<br>
-          <em>Journey</em>
-        </h2>
-
-        <div class="timeline">
-
-          <!-- VERITA INFORMATIKA -->
-          <article class="timeline-card reveal">
-
-            <div class="year mono">
-              Aug 2026 — Present
-            </div>
-
-            <div>
-
-              <h3>
-                Production Support Service - Junior
-              </h3>
-
-              <div class="company">
-                PT Verita Informatika
-              </div>
-
-              <p>
-                Supporting production systems by monitoring and tracing application
-                issues using Elastic and Dynatrace. Assisting in issue investigation,
-                log analysis, and identifying the source of technical problems to
-                support system stability.
-              </p>
-
-            </div>
-
-          </article>
-
-          <!-- AYOE -->
-          <article class="timeline-card reveal">
-
-            <div class="year mono">
-              Dec 2025 — Jul 2026
-            </div>
-
-            <div>
-
-              <h3>
-                Programmer
-              </h3>
-
-              <div class="company">
-                PT Ayoe Indotama Textile
-              </div>
-
-              <p>
-                Developed and maintained an HRIS web application for attendance,
-                shift management, HR administration, overtime, time off, and
-                payroll calculation using CodeIgniter 3 and MySQL.
-              </p>
-
-            </div>
-
-          </article>
-
-          <!-- DISKOMINFO -->
-          <article class="timeline-card reveal">
-
-            <div class="year mono">
-              Mar 2025 — May 2025
-            </div>
-
-            <div>
-
-              <h3>
-                UI/UX Designer - POLAKAMI Dashboard
-              </h3>
-
-              <div class="company">
-                Diskominfo Kota Cimahi
-              </div>
-
-              <p>
-                Designed an admin dashboard for POLAKAMI to support service
-                monitoring and user activity tracking. Created user-centered
-                interface designs and high-fidelity prototypes in Figma based
-                on identified usability and information management needs.
-              </p>
-
-            </div>
-
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-
-      <div class="container">
-
-        <div class="section-label mono reveal">
-          // 06 — Contact
-        </div>
-
-        <div class="contact-wrap">
-
-          <div class="contact-left reveal">
-
-            <h2 class="section-title">
-              Let's build<br>
-              <em>something.</em>
-            </h2>
-
-            <p>
-              Interested in collaborating, discussing a project, or reviewing
-              my full portfolio? Feel free to contact me through the form or
-              the social links below.
-            </p>
-
-            <div class="contact-links">
-
-              <a
-                class="contact-link"
-                href="mailto:nadiyahonly1106@gmail.com">
-                Email: nadiyahonly1106@gmail.com
-              </a>
-
-              <a
-                class="contact-link"
-                href="https://www.linkedin.com/in/nadiyah-321731286/"
-                target="_blank">
-                LinkedIn Profile
-              </a>
-
-              <a
-                class="contact-link"
-                href="https://wa.me/6285872079816"
-                target="_blank">
-                WhatsApp
-              </a>
-
-              <a
-                class="contact-link"
-                href="https://github.com/Nadiyahd3ti"
-                target="_blank">
-                GitHub Profile
-              </a>
-
-            </div>
-
-          </div>
-
-          <!-- CONTACT FORM -->
-          <form
-            class="contact-form reveal"
-            id="contactForm"
-            action="https://formsubmit.co/nadiyahonly1106@gmail.com"
-            method="POST">
-
-            <input
-              type="hidden"
-              name="_captcha"
-              value="false">
-
-            <input
-              type="hidden"
-              name="_template"
-              value="table">
-
-            <input
-              type="hidden"
-              name="_subject"
-              value="New Portfolio Message">
-
-            <input
-              type="hidden"
-              name="_next"
-              value="thank-you.html">
-
-            <div class="form-row">
-
-              <div class="form-group">
-
-                <label class="mono">
-                  NAME
-                </label>
-
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your name"
-                  required>
-
-              </div>
-
-              <div class="form-group">
-
-                <label class="mono">
-                  EMAIL
-                </label>
-
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="email@example.com"
-                  required>
-
-              </div>
-
-            </div>
-
-            <div class="form-group">
-
-              <label class="mono">
-                SUBJECT
-              </label>
-
-              <input
-                type="text"
-                name="subject"
-                placeholder="Project Discussion">
-
-            </div>
-
-            <div class="form-group">
-
-              <label class="mono">
-                MESSAGE
-              </label>
-
-              <textarea
-                name="message"
-                rows="6"
-                placeholder="Write your message..."
-                required></textarea>
-
-            </div>
-
-            <button
-              class="btn btn-primary full"
-              type="submit">
-
-              <span>
-                Send Message
-              </span>
-
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2">
-
-                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-
-              </svg>
-
-            </button>
-
-            <div
-              class="form-success"
-              id="formSuccess">
-              Thank you. Your message is being sent to my email.
-            </div>
-
-          </form>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-
-    <div class="container footer-inner">
-
-      <span class="mono">
-        © 2026 NADIYAH.DEV
-      </span>
-
-      <div class="footer-links">
-
-        <a href="#projects">
-          Projects
-        </a>
-
-        <a href="#certifications">
-          Certifications
-        </a>
-
-        <a href="#contact">
-          Contact
-        </a>
-
-      </div>
-
-      <span class="mono">
-        Crafted with precision
-      </span>
-
-    </div>
-
-  </footer>
-
-  <!-- SCRIPT -->
-  <script>
-
-    /* MOBILE MENU */
-    const burger = document.getElementById("burger");
-    const mobileMenu = document.getElementById("mobileMenu");
-
-    burger.addEventListener("click", () => {
-      mobileMenu.classList.toggle("active");
-    });
-
-
-    /* SMOOTH SCROLL */
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-
-      anchor.addEventListener("click", function (e) {
-
-        const targetId = this.getAttribute("href");
-        const target = document.querySelector(targetId);
-
-        if (target) {
-
-          e.preventDefault();
-
-          mobileMenu.classList.remove("active");
-
-          target.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-
-        }
-
-      });
-
-    });
-
-
-    /* PLACEHOLDER LINKS */
-    document.querySelectorAll(".placeholder-link").forEach(button => {
-
-      button.addEventListener("click", function (e) {
-
-        if (this.getAttribute("href") === "#") {
-
-          e.preventDefault();
-
-          alert(
-            "This link is still a placeholder. Replace the href value with your project link."
-          );
-
-        }
-
-      });
-
-    });
-
-
-    /* CONTACT FORM */
-    const contactForm = document.getElementById("contactForm");
-    const submitButton = contactForm.querySelector('button[type="submit"]');
-    const formSuccess = document.getElementById("formSuccess");
-
-    contactForm.addEventListener("submit", function () {
-
-      submitButton.disabled = true;
-
-      submitButton.querySelector("span").textContent = "Sending...";
-
-      formSuccess.style.display = "block";
-
-    });
-
-
-    /* REVEAL ANIMATION */
-    const observer = new IntersectionObserver(
-      (entries) => {
-
-        entries.forEach(entry => {
-
-          if (entry.isIntersecting) {
-
-            entry.target.classList.add("visible");
-
-          }
-
-        });
-
-      },
-      {
-        threshold: 0.14
-      }
-    );
-
-
-    document.querySelectorAll(".reveal").forEach(el => {
-
-      observer.observe(el);
-
-    });
-
-  </script>
-
+<header>
+<div class="nav-inner">
+<a href="#home" class="logo">Nadiyah</a>
+<nav class="nav-links mono">
+<a href="#about">About</a><a href="#projects">Projects</a><a href="#showcase">UI/UX</a><a href="#certifications">Certifications</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
+</nav>
+<button class="burger" id="burger" aria-label="Open Menu"><span></span><span></span><span></span></button>
+</div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+<a href="#about">01. About</a><a href="#projects">02. Projects</a><a href="#showcase">03. UI/UX</a><a href="#certifications">04. Certifications</a><a href="#experience">05. Experience</a><a href="#contact">06. Contact</a>
+</div>
+
+<main>
+
+<section class="hero" id="home">
+<div class="hero-content">
+<div class="eyebrow mono reveal"><span class="dot"></span>Available for opportunities</div>
+<h1 class="hero-title reveal">Web <span>Developer</span> & UI/UX Designer</h1>
+<p class="hero-desc reveal">Informatics Engineering graduate with experience in web-based application development, system analysis, UI/UX design, BPMN mapping, and responsive interface implementation.</p>
+<div class="hero-actions reveal">
+<a href="#projects" class="btn btn-primary"><span>View Work</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a href="https://www.linkedin.com/in/nadiyah-321731286/" target="_blank" class="btn btn-ghost">LinkedIn Profile</a>
+</div>
+</div>
+<div class="hero-visual reveal">
+<div class="avatar-wrap">
+<div class="avatar-ring ring-1"></div><div class="avatar-ring ring-2"></div><div class="avatar-ring ring-3"></div>
+<img class="avatar-img" src="image/ava.jpg" alt="Nadiyah Profile Photo">
+</div>
+</div>
+</section>
+
+<section id="about">
+<div class="container">
+<div class="section-label mono reveal">// 01 — About Me</div>
+<div class="about-panel reveal">
+<div class="about-layout">
+<div class="about-title">
+<h2 class="section-title">Crafting Digital<br><em>Products</em></h2>
+<p class="about-subtitle">I combine interface design, system analysis, and web development to build structured, usable, and visually clean digital experiences.</p>
+</div>
+<div class="about-content">
+<p>I am a Diploma in Informatics Engineering graduate from the University of Logistics and International Business, with experience in developing web-based applications using frameworks such as <strong>Laravel</strong> and <strong>CodeIgniter</strong>. I am also skilled in <strong>HTML</strong>, <strong>CSS</strong>, <strong>JavaScript</strong>, <strong>PHP</strong>, and <strong>MySQL</strong>.</p>
+<p>I have experience in <strong>System Analysis</strong>, especially in mapping business processes using <strong>BPMN</strong> through Bizagi and Visual Paradigm. I am also experienced in creating prototype designs with <strong>Figma</strong> and preparing system documentation using <strong>MS Office</strong>.</p>
+<p>Through professional experience, internship, organizational activities, and UI/UX projects, I have developed the ability to translate business needs into structured, functional, and user-friendly digital products.</p>
+<div class="about-highlights">
+<div class="about-highlight"><strong>Web Development</strong><span>Laravel, CodeIgniter, PHP, MySQL, and responsive interfaces.</span></div>
+<div class="about-highlight"><strong>UI/UX Design</strong><span>Figma prototyping, design systems, mobile UI, and dashboard design.</span></div>
+<div class="about-highlight"><strong>System Analysis</strong><span>BPMN, business process mapping, requirements, and documentation.</span></div>
+</div>
+<div class="skills">
+<span class="skill-tag">Laravel</span><span class="skill-tag">CodeIgniter</span><span class="skill-tag">HTML</span><span class="skill-tag">CSS</span><span class="skill-tag">JavaScript</span><span class="skill-tag">PHP</span><span class="skill-tag">MySQL</span><span class="skill-tag">System Analyst</span><span class="skill-tag">BPMN</span><span class="skill-tag">Bizagi</span><span class="skill-tag">Visual Paradigm</span><span class="skill-tag">Figma</span><span class="skill-tag">MS Office</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="projects">
+<div class="container">
+<div class="section-label mono reveal">// 02 — Portfolio</div>
+<h2 class="section-title reveal">Selected<br><em>Projects</em></h2>
+<div class="projects-grid">
+
+<!-- POLAKAMI -->
+<article class="project-card reveal">
+<div class="project-media has-image"><img src="./polakami.png" alt="POLAKAMI Dashboard" class="project-thumbnail"></div>
+<div class="project-info">
+<div class="project-tags"><span class="tag">Figma</span><span class="tag">UI/UX</span></div>
+<h3>POLAKAMI Dashboard</h3>
+<p>A public service dashboard concept for POLAKAMI, designed to support monitoring, interaction history, service analytics, and a more intuitive admin experience.</p>
+<div class="project-actions">
+<a href="https://www.figma.com/design/uH1OuVNuD8w761Ndjpq8ye/DASHBOARD-ADMIN?node-id=39-186&p=f&t=BuBunPrDVTzbpGqw-0" target="_blank" class="small-btn primary-link">Figma</a>
+<a href="./LAPORAN_PKL_FIX.pdf" target="_blank" class="small-btn">View Docs</a>
+</div>
+</div>
+</article>
+
+<!-- BEASISWA -->
+<article class="project-card reveal">
+<div class="project-media has-image"><img src="./beasiswa.png" alt="Scholarship Decision Support System" class="project-thumbnail"></div>
+<div class="project-info">
+<div class="project-tags"><span class="tag">Laravel</span><span class="tag">SQLite</span><span class="tag">SAW</span></div>
+<h3>Scholarship DSS with SAW</h3>
+<p>A scholarship decision support system using the Simple Additive Weighting method to help evaluate applicants based on criteria, weights, and final ranking results.</p>
+<div class="project-actions">
+<a href="#" class="small-btn placeholder-link">Live Demo</a>
+<a href="https://github.com/Nadiyahd3ti/beasiswa-saw" target="_blank" class="small-btn primary-link">GitHub</a>
+</div>
+</div>
+</article>
+
+<!-- COMMUNITY -->
+<article class="project-card reveal">
+<div class="project-media has-image"><img src="./surosowan.png" alt="CommUnity UI/UX Case Study" class="project-thumbnail"></div>
+<div class="project-info">
+<div class="project-tags"><span class="tag">UI/UX</span><span class="tag">Figma</span><span class="tag">Case Study</span></div>
+<h3>CommUnity App</h3>
+<p>A mobile UI/UX project at Academy Surosowan Cyber focused on onboarding, community discovery, forum discussions, event features, and intuitive mobile navigation.</p>
+<div class="project-actions">
+<a href="https://aware-blizzard-0eb.notion.site/CommUnity-UX-Case-Study-6e6787e1a5b44651bc50cecd262e4cd1?source=copy_link" target="_blank" class="small-btn primary-link">Live Demo</a>
+<a href="#" class="small-btn placeholder-link">GitHub</a>
+</div>
+</div>
+</article>
+
+<!-- COSMETICS E-COMMERCE -->
+<article class="project-card reveal">
+<div class="project-media has-image"><img src="./kosmetik.png" alt="Cosmetics E-Commerce Website" class="project-thumbnail"></div>
+<div class="project-info">
+<div class="project-tags"><span class="tag">Web Development</span><span class="tag">E-Commerce</span><span class="tag">Online Ordering</span></div>
+<h3>Cosmetics E-Commerce Website</h3>
+<p>A web-based cosmetics e-commerce application designed to help customers explore beauty products, view product information, and place orders online. The system focuses on cosmetics and accessories with bank transfer as the supported payment method.</p>
+<div class="project-actions single">
+<a href="#" class="small-btn placeholder-link primary-link">View Project</a>
+</div>
+</div>
+</article>
+
+</div>
+</div>
+</section>
+
+<section id="showcase">
+<div class="container">
+<div class="section-label mono reveal">// 03 — UI/UX Showcase</div>
+<h2 class="section-title reveal">Design<br><em>Showcase</em></h2>
+<div class="showcase-grid">
+
+<article class="showcase-card big reveal">
+<div class="showcase-media"><img src="./surosowan.png" alt="CommUnity Mobile App UI" class="project-thumbnail"></div>
+<div class="showcase-body">
+<div class="project-tags"><span class="tag">Mobile UI</span><span class="tag">UX Case Study</span><span class="tag">Prototype</span></div>
+<h3>CommUnity Mobile App Interface</h3>
+<p>Mobile application design for community discovery and social interaction. This showcase highlights onboarding flow, interest selection, community search, event features, and clean mobile navigation.</p>
+<div class="project-actions">
+<a href="https://aware-blizzard-0eb.notion.site/CommUnity-UX-Case-Study-6e6787e1a5b44651bc50cecd262e4cd1?source=copy_link" target="_blank" class="small-btn primary-link">View Case Study</a>
+<a href="https://www.figma.com/design/psSgg3aoVyMgZ57IyQBOmD/CommUnity?node-id=130-212&p=f&t=nDLFovp1g3OT7rXN-0" target="_blank" class="small-btn">Open Figma</a>
+</div>
+</div>
+</article>
+
+<div class="showcase-side">
+<article class="showcase-card reveal">
+<div class="showcase-media small"><img src="./polakami.png" alt="POLAKAMI Dashboard Design" class="project-thumbnail"></div>
+<div class="showcase-body">
+<div class="project-tags"><span class="tag">Dashboard</span><span class="tag">Figma</span></div>
+<h3>POLAKAMI Dashboard Design</h3>
+<p>Dashboard admin interface for monitoring public service usage, interaction history, and service analytics.</p>
+<div class="project-actions single"><a href="https://www.figma.com/design/uH1OuVNuD8w761Ndjpq8ye/DASHBOARD-ADMIN?node-id=39-186&p=f&t=BuBunPrDVTzbpGqw-0" target="_blank" class="small-btn primary-link">Open Figma</a></div>
+</div>
+</article>
+
+<article class="showcase-card reveal">
+<div class="design-system-preview">
+<div class="ds-box"><div class="ds-title">Color Palette</div>Primary blue, soft gray, white surface, and clean contrast.<div class="color-dots"><span class="color-dot c1"></span><span class="color-dot c2"></span><span class="color-dot c3"></span></div></div>
+<div class="ds-box"><div class="ds-title">Components</div>Buttons, search bars, inputs, dropdowns, headers, and bottom navigation.<div class="mini-button">Button</div></div>
+</div>
+<div class="showcase-body">
+<div class="project-tags"><span class="tag">Design System</span><span class="tag">Components</span></div>
+<h3>CommUnity Design System</h3>
+<p>A reusable design system consisting of typography, components, form elements, dropdowns, and mobile interface patterns.</p>
+<div class="project-actions single"><a href="https://www.figma.com/design/psSgg3aoVyMgZ57IyQBOmD/CommUnity?node-id=130-212&p=f&t=nDLFovp1g3OT7rXN-0" target="_blank" class="small-btn primary-link">Open Figma</a></div>
+</div>
+</article>
+</div>
+</div>
+</div>
+</section>
+
+<section id="certifications">
+<div class="container">
+<div class="section-label mono reveal">// 04 — Licenses & Certifications</div>
+<h2 class="section-title reveal">Professional<br><em>Certifications</em></h2>
+<div class="certifications-grid">
+
+<article class="cert-card reveal">
+<div class="cert-logo">BNSP</div>
+<div class="cert-content">
+<h3>Junior Computer Network Technician</h3>
+<div class="cert-issuer">Badan Nasional Sertifikasi Profesi (BNSP)</div>
+<div class="cert-date">Issued Oct 2025 · Expires Oct 2028</div>
+<div class="cert-skills"><span class="tag">Computer Network</span><span class="tag">Network Technician</span></div>
+</div>
+</article>
+
+<article class="cert-card reveal">
+<div class="cert-logo"><img src="./Surosowan.png" alt="Surosowan Cyber Certificate" onerror="this.style.display='none';this.parentElement.textContent='SC';"></div>
+<div class="cert-content">
+<h3>UI/UX Design</h3>
+<div class="cert-issuer">Surosowan Cyber</div>
+<div class="cert-date">Issued Oct 2024 · Expires Oct 2025</div>
+<div class="cert-skills"><span class="tag">Figma</span><span class="tag">User Experience Design</span><span class="tag">UI Design</span></div>
+</div>
+</article>
+
+<article class="cert-card reveal">
+<div class="cert-logo"><img src="./SAP.jpg" alt="SAP ABAP Certificate" onerror="this.style.display='none';this.parentElement.textContent='SAP';"></div>
+<div class="cert-content">
+<h3>SAP: BC400 - Introduction to the ABAP Workbench</h3>
+<div class="cert-issuer">University of Logistics and International Business (ULBI)</div>
+<div class="cert-date">Issued Jul 2024 · Expires Jul 2025</div>
+<div class="cert-skills"><span class="tag">SAP</span><span class="tag">ABAP Workbench</span></div>
+</div>
+</article>
+
+<article class="cert-card reveal">
+<div class="cert-logo">CS</div>
+<div class="cert-content">
+<h3>Intro to Programming Class</h3>
+<div class="cert-issuer">Coding Studio</div>
+<div class="cert-date">Issued Feb 2024 · Expires Feb 2025</div>
+<div class="cert-skills"><span class="tag">PHP</span><span class="tag">HTML</span><span class="tag">Programming Basics</span></div>
+</div>
+</article>
+
+</div>
+</div>
+</section>
+
+<section id="experience">
+<div class="container">
+<div class="section-label mono reveal">// 05 — Experience</div>
+<h2 class="section-title reveal">Career<br><em>Journey</em></h2>
+<div class="timeline">
+
+<article class="timeline-card reveal">
+<div class="year mono">Aug 2026 — Present</div>
+<div><h3>Production Support Service - Junior</h3><div class="company">PT Verita Informatika</div><p>Supporting production systems by monitoring and tracing application issues using Elastic and Dynatrace. Assisting in issue investigation, log analysis, and identifying the source of technical problems to support system stability.</p></div>
+</article>
+
+<article class="timeline-card reveal">
+<div class="year mono">Dec 2025 — Jul 2026</div>
+<div><h3>Programmer</h3><div class="company">PT Ayoe Indotama Textile</div><p>Developed and maintained an HRIS web application for attendance, shift management, HR administration, overtime, time off, and payroll calculation using CodeIgniter 3 and MySQL.</p></div>
+</article>
+
+<article class="timeline-card reveal">
+<div class="year mono">Mar 2025 — May 2025</div>
+<div><h3>UI/UX Designer - POLAKAMI Dashboard</h3><div class="company">Diskominfo Kota Cimahi</div><p>Designed an admin dashboard for POLAKAMI to support service monitoring and user activity tracking. Created user-centered interface designs and high-fidelity prototypes in Figma based on identified usability and information management needs.</p></div>
+</article>
+
+</div>
+</div>
+</section>
+
+<section id="contact">
+<div class="container">
+<div class="section-label mono reveal">// 06 — Contact</div>
+<div class="contact-wrap">
+<div class="contact-left reveal">
+<h2 class="section-title">Let's build<br><em>something.</em></h2>
+<p>Interested in collaborating, discussing a project, or reviewing my full portfolio? Feel free to contact me through the form or the social links below.</p>
+<div class="contact-links">
+<a class="contact-link" href="mailto:nadiyahonly1106@gmail.com">Email: nadiyahonly1106@gmail.com</a>
+<a class="contact-link" href="https://www.linkedin.com/in/nadiyah-321731286/" target="_blank">LinkedIn Profile</a>
+<a class="contact-link" href="https://wa.me/6285872079816" target="_blank">WhatsApp</a>
+<a class="contact-link" href="https://github.com/Nadiyahd3ti" target="_blank">GitHub Profile</a>
+</div>
+</div>
+
+<form class="contact-form reveal" id="contactForm" action="https://formsubmit.co/nadiyahonly1106@gmail.com" method="POST">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_subject" value="New Portfolio Message">
+<input type="hidden" name="_next" value="thank-you.html">
+<div class="form-row">
+<div class="form-group"><label class="mono">NAME</label><input type="text" name="name" placeholder="Your name" required></div>
+<div class="form-group"><label class="mono">EMAIL</label><input type="email" name="email" placeholder="email@example.com" required></div>
+</div>
+<div class="form-group"><label class="mono">SUBJECT</label><input type="text" name="subject" placeholder="Project Discussion"></div>
+<div class="form-group"><label class="mono">MESSAGE</label><textarea name="message" rows="6" placeholder="Write your message..." required></textarea></div>
+<button class="btn btn-primary full" type="submit"><span>Send Message</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+<div class="form-success" id="formSuccess">Thank you. Your message is being sent to my email.</div>
+</form>
+</div>
+</div>
+</section>
+
+</main>
+
+<footer>
+<div class="container footer-inner">
+<span class="mono">© 2026 NADIYAH.DEV</span>
+<div class="footer-links"><a href="#projects">Projects</a><a href="#certifications">Certifications</a><a href="#contact">Contact</a></div>
+<span class="mono">Crafted with precision</span>
+</div>
+</footer>
+
+<script>
+const burger=document.getElementById("burger"),mobileMenu=document.getElementById("mobileMenu");
+burger.addEventListener("click",()=>{mobileMenu.classList.toggle("active")});
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{anchor.addEventListener("click",function(e){const targetId=this.getAttribute("href"),target=document.querySelector(targetId);if(target){e.preventDefault();mobileMenu.classList.remove("active");target.scrollIntoView({behavior:"smooth",block:"start"})}})});
+document.querySelectorAll(".placeholder-link").forEach(button=>{button.addEventListener("click",function(e){if(this.getAttribute("href")==="#"){e.preventDefault();alert("This link is still a placeholder. Replace the href value with your project link.")}})});
+const contactForm=document.getElementById("contactForm"),submitButton=contactForm.querySelector('button[type="submit"]'),formSuccess=document.getElementById("formSuccess");
+contactForm.addEventListener("submit",function(){submitButton.disabled=true;submitButton.querySelector("span").textContent="Sending...";formSuccess.style.display="block"});
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible")}})},{threshold:.14});
+document.querySelectorAll(".reveal").forEach(el=>{observer.observe(el)});
+</script>
 </body>
-
 </html>
